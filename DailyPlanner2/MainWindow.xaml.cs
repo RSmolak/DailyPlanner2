@@ -24,5 +24,20 @@ namespace DailyPlanner2
         {
             InitializeComponent();
         }
+
+        private void AddTask_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteTask_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModifyTask_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

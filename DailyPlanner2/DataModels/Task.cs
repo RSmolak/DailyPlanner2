@@ -6,13 +6,22 @@ using System.Threading.Tasks;
 
 namespace DailyPlanner2.DataModels
 {
-    internal class Task
+
+    using System.ComponentModel.DataAnnotations;
+    public class Task
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Decription { get; set; }  
-        public int Status { get; set; } 
-        public DateOnly DateOnly { get; set; }
-
+        public bool Status { get; set; } 
+        [Required]
+        public int Day { get; set; }
+        [Required]
+        public int Month { get; set; }
+        [Required]
+        public int Year { get; set; }
+        
     }
 }

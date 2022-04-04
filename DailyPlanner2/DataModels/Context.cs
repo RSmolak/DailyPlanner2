@@ -9,12 +9,12 @@ namespace DailyPlanner2.DataModels
 {
     public class Context : DbContext
     {
-        DbSet<Task> tasks {get; set;}
+        DbSet<Task>? tasks {get; set;}
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\\MSSQLLocalDB;Database=DailyPlanner;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DailyPlanner2;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
     }
 }
