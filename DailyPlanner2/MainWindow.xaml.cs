@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyPlanner2.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,10 +24,28 @@ namespace DailyPlanner2
         public MainWindow()
         {
             InitializeComponent();
+
+            using Context myContext = new();
+            foreach (var task in myContext.tasks)
+            {
+
+            }
         }
 
         private void AddTask_Click(object sender, RoutedEventArgs e)
         {
+            using Context myContext = new();
+            myContext.tasks.Add(new DataModels.Task()
+            {
+                Name = "Zrob cos",
+                Day = 10,
+                Month = 4,
+                Year = 2022,
+                Status = false,
+                Decription = "Musisz cos zrobic",
+            }
+            );
+            myContext.SaveChanges();    
 
         }
 

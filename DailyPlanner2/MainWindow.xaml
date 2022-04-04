@@ -220,12 +220,12 @@
         </ScrollViewer>
         <Button x:Name="AddTask" Content="+" Grid.Column="0" Grid.Row="2" Height="60"
                 Width="60" HorizontalAlignment="Left" Margin="5"
-                Click="AddTask_Click" ClickMode="Hover"/>
+                Click="AddTask_Click"/>
         <Button x:Name="DeleteTask" Content="-" Grid.Column="0" Grid.Row="2" Height="60"
                 Width="60" HorizontalAlignment="Center" Margin="5"
-                Click="DeleteTask_Click" ClickMode="Hover"/>
+                Click="DeleteTask_Click"/>
         <Button x:Name="ModifyTask" Content="E" Grid.Column="0" Grid.Row="2" Height="60"
                 Width="60" HorizontalAlignment="Right" Margin="5"
-                Click="ModifyTask_Click" ClickMode="Hover"/>
+                Click="ModifyTask_Click"/>
     </Grid>
 </Window>
