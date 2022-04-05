@@ -35,16 +35,33 @@ namespace DailyPlanner2
         private void AddTask_Click(object sender, RoutedEventArgs e)
         {
             using Context myContext = new();
-            myContext.tasks.Add(new DataModels.Task()
+
+            int Day = 10;
+            int Month = 4;
+            int Year = 2022;
+           
+            int newNumber = Convert.ToInt32(string.Format("{0}{1}{2}", Day, Month, Year));
+            var temp = myContext.dates.Find(newNumber);
+
+            Date date = new()
+            {
+                Day = Day,
+                Month = Month,
+                Year = Year,
+            };
+
+            DataModels.Task task = new DataModels.Task()
             {
                 Name = "Zrob cos",
-                Day = 10,
-                Month = 4,
-                Year = 2022,
-                Status = false,
-                Decription = "Musisz cos zrobic",
-            }
-            );
+                Date = date,
+                DateId = date.Id,
+                Decription = "Musisz cos zrobis",
+                Status = false
+            };
+
+            myContext.tasks.Add(task);
+            date.Tasks.Add(task);
+            myContext.dates.Add(date);
             myContext.SaveChanges();    
 
         }

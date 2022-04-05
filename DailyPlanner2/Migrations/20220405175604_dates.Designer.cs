@@ -4,6 +4,7 @@ using DailyPlanner2.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DailyPlanner2.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220405175604_dates")]
+    partial class dates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace DailyPlanner2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("dates", (string)null);
+                    b.ToTable("dates");
                 });
 
             modelBuilder.Entity("DailyPlanner2.DataModels.Task", b =>
@@ -55,9 +57,15 @@ namespace DailyPlanner2.Migrations
                     b.Property<int?>("DateId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
                     b.Property<string>("Decription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -66,20 +74,21 @@ namespace DailyPlanner2.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DateId");
 
-                    b.ToTable("tasks", (string)null);
+                    b.ToTable("tasks");
                 });
 
             modelBuilder.Entity("DailyPlanner2.DataModels.Task", b =>
                 {
-                    b.HasOne("DailyPlanner2.DataModels.Date", "Date")
+                    b.HasOne("DailyPlanner2.DataModels.Date", null)
                         .WithMany("Tasks")
                         .HasForeignKey("DateId");
-
-                    b.Navigation("Date");
                 });
 
             modelBuilder.Entity("DailyPlanner2.DataModels.Date", b =>

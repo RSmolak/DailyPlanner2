@@ -4,6 +4,7 @@ using DailyPlanner2.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DailyPlanner2.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220405182319_dates-tasks")]
+    partial class datestasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace DailyPlanner2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("dates", (string)null);
+                    b.ToTable("dates");
                 });
 
             modelBuilder.Entity("DailyPlanner2.DataModels.Task", b =>
@@ -70,7 +72,7 @@ namespace DailyPlanner2.Migrations
 
                     b.HasIndex("DateId");
 
-                    b.ToTable("tasks", (string)null);
+                    b.ToTable("tasks");
                 });
 
             modelBuilder.Entity("DailyPlanner2.DataModels.Task", b =>

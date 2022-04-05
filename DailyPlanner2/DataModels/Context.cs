@@ -10,6 +10,7 @@ namespace DailyPlanner2.DataModels
     public class Context : DbContext
     {
         public DbSet<Task> tasks {get; set;}
+        public DbSet<Date> dates {get; set;}
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
