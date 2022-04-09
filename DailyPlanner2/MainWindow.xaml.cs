@@ -28,7 +28,8 @@ namespace DailyPlanner2
             using Context myContext = new();
             foreach (var task in myContext.tasks)
             {
-
+                Tasks.Orientation = Orientation.Vertical;
+                Tasks.cont
             }
         }
 
@@ -37,11 +38,8 @@ namespace DailyPlanner2
             using Context myContext = new();
 
             int Day = 10;
-            int Month = 4;
+            int Month = 5;
             int Year = 2022;
-           
-            int newNumber = Convert.ToInt32(string.Format("{0}{1}{2}", Day, Month, Year));
-            var temp = myContext.dates.Find(newNumber);
 
             Date date = new()
             {
@@ -55,14 +53,28 @@ namespace DailyPlanner2
                 Name = "Zrob cos",
                 Date = date,
                 DateId = date.Id,
-                Decription = "Musisz cos zrobis",
+                Decription = "Musisz cos zrobic",
                 Status = false
             };
 
-            myContext.tasks.Add(task);
-            date.Tasks.Add(task);
-            myContext.dates.Add(date);
-            myContext.SaveChanges();    
+            if (myContext.dates.Any(o => o.Day == Day) && myContext.dates.Any(o => o.Month == Month) && myContext.dates.Any(o => o.Year == Year))
+            {
+                var tempTask =  myContext.dates.Where(a => a.Day == Day && a.Month == Month && a.Year == Year).First();
+                task.Date = tempTask;
+                task.DateId = tempTask.Id;
+                myContext.tasks.Add(task);
+                tempTask.Tasks.Add(task);
+                myContext.SaveChanges();
+            }
+            else
+            {
+                myContext.tasks.Add(task);
+                date.Tasks.Add(task);
+                myContext.dates.Add(date);
+                myContext.SaveChanges();
+            }
+
+                   
 
         }
 
