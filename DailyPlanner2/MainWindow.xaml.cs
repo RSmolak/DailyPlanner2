@@ -36,6 +36,13 @@ namespace DailyPlanner2
 
         private void AddTask_Click(object sender, RoutedEventArgs e)
         {
+            if (!MyCalendar.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Musisz wybrać jakiś dzień aby dodać zadanie!");
+                return;
+            }
+
+
             using Context myContext = new();
 
             DateTime? selectedDate = MyCalendar.SelectedDate;
@@ -43,7 +50,6 @@ namespace DailyPlanner2
             int Day = selectedDate.Value.Day;
             int Month = selectedDate.Value.Month;
             int Year = selectedDate.Value.Year;
-
 
             Date date = new()
             {
@@ -54,12 +60,21 @@ namespace DailyPlanner2
 
             DataModels.Task task = new DataModels.Task()
             {
-                Name = "Zrob cos",
                 Date = date,
                 DateId = date.Id,
-                Decription = "Musisz cos zrobic",
-                Status = false
+                Status = false,
             };
+
+            TaskSpec taskSpec = new TaskSpec();
+            if (taskSpec.ShowDialog() == true)
+            {
+                string tskName = taskSpec.ResultTaskName;
+                string descr = taskSpec.ResultDescription;
+                task.Name = tskName;
+                task.Decription = descr;
+            }
+
+            
 
             if (myContext.dates.Any(o => o.Day == Day) && myContext.dates.Any(o => o.Month == Month) && myContext.dates.Any(o => o.Year == Year))
             {
