@@ -24,12 +24,13 @@ namespace DailyPlanner2
         public MainWindow()
         {
             InitializeComponent();
+            MyCalendar.SelectedDate = DateTime.Now; 
+
 
             using Context myContext = new();
             foreach (var task in myContext.tasks)
             {
                 Tasks.Orientation = Orientation.Vertical;
-                Tasks.cont
             }
         }
 
@@ -37,9 +38,12 @@ namespace DailyPlanner2
         {
             using Context myContext = new();
 
-            int Day = 10;
-            int Month = 5;
-            int Year = 2022;
+            DateTime? selectedDate = MyCalendar.SelectedDate;
+
+            int Day = selectedDate.Value.Day;
+            int Month = selectedDate.Value.Month;
+            int Year = selectedDate.Value.Year;
+
 
             Date date = new()
             {

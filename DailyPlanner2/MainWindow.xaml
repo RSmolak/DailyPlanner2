@@ -211,10 +211,10 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <Calendar Style="{DynamicResource CalendarStyle1}"/>
+            <Calendar Style="{DynamicResource CalendarStyle1}" x:Name="MyCalendar"/>
         </Viewbox>
         <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Hidden">
-            <StackPanel x:Name="Tasks">
+            <StackPanel x:Name="Tasks" >
 
             </StackPanel>
         </ScrollViewer>
