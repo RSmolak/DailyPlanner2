@@ -50,7 +50,11 @@ namespace DailyPlanner2
             Window.GetWindow(this).DialogResult = true;
             Window.GetWindow(this).Close();
         }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).DialogResult = false;
+            Window.GetWindow(this).Close();
+        }
 
-        
     }
 }

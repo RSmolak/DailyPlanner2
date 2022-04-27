@@ -25,6 +25,8 @@ namespace DailyPlanner2
     public partial class MainWindow : Window
     {
         const string APIKey = "251c59d489e49d827c6c29ff6bf71e4d";
+        bool clickStatusDelete = false;
+        bool clickStatusModify = false;
 
         void getWeather()
         {
@@ -41,7 +43,7 @@ namespace DailyPlanner2
             MyCalendar.SelectedDate = DateTime.Now;
             DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
             ClearTaskDisplay();
-            DisplayTasks(selectedDate);
+            DisplayTasks(generateStacks((DateTime)selectedDate));
         }
 
         private void AddTask_Click(object sender, RoutedEventArgs e)
@@ -52,14 +54,10 @@ namespace DailyPlanner2
                 return;
             }
 
-            using Context myContext = new();
-
             DateTime? selectedDate = MyCalendar.SelectedDate;
-
             int Day = selectedDate.Value.Day;
             int Month = selectedDate.Value.Month;
             int Year = selectedDate.Value.Year;
-
             Date date = new()
             {
                 Day = Day,
@@ -75,6 +73,9 @@ namespace DailyPlanner2
             };
 
             TaskSpec taskSpec = new TaskSpec();
+            taskSpec.Day.Text = "Dzień: " + date.Day.ToString();
+            taskSpec.Month.Text = "Miesiąc: " + date.Month.ToString();
+            taskSpec.Year.Text = "Rok: " + date.Year.ToString();
             if (taskSpec.ShowDialog() == true)
             {
                 string tskName = taskSpec.ResultTaskName;
@@ -83,9 +84,11 @@ namespace DailyPlanner2
                 task.Decription = descr;
             }
 
+
+            using Context myContext = new();
             if (myContext.dates.Any(o => o.Day == Day) && myContext.dates.Any(o => o.Month == Month) && myContext.dates.Any(o => o.Year == Year))
             {
-                var tempTask =  myContext.dates.Where(a => a.Day == Day && a.Month == Month && a.Year == Year).First();
+                var tempTask = myContext.dates.Where(a => a.Day == Day && a.Month == Month && a.Year == Year).First();
                 task.Date = tempTask;
                 task.DateId = tempTask.Id;
                 myContext.tasks.Add(task);
@@ -101,146 +104,188 @@ namespace DailyPlanner2
             }
 
             ClearTaskDisplay();
-            DisplayTasks((DateTime)selectedDate);
+            DisplayTasks(generateStacks((DateTime)selectedDate));
         }
 
         private void DeleteTask_Click(object sender, RoutedEventArgs e)
         {
-
+            if (clickStatusDelete == false) { clickStatusDelete = true; clickStatusModify = false; }
+            else if (clickStatusDelete == true) { clickStatusDelete = false; clickStatusModify = false; }
         }
 
         private void ModifyTask_Click(object sender, RoutedEventArgs e)
         {
-
+            if (clickStatusModify == false) { clickStatusModify = true; clickStatusDelete = false; }
+            else if (clickStatusModify == true) { clickStatusDelete = false; clickStatusModify = false; }
         }
 
         private void Calendar_OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
             ClearTaskDisplay();
-            DisplayTasks(selectedDate);
+            DisplayTasks(generateStacks((DateTime)selectedDate));
         }
 
-        private void DisplayTasks(DateTime date)
+        private List<DockPanel> generateStacks(DateTime date)
         {
             using Context myContext = new();
-
-
-            if (myContext.dates.Any(o => o.Day == date.Day)
+            if (!(myContext.dates.Any(o => o.Day == date.Day)
                 && myContext.dates.Any(o => o.Month == date.Month)
-                && myContext.dates.Any(o => o.Year == date.Year))
+                && myContext.dates.Any(o => o.Year == date.Year)))
             {
-                var dateInDatabase = myContext.dates.Include(m => m.Tasks)
+                return new List<DockPanel>();
+            }
+
+            var dateInDatabase = myContext.dates.Include(m => m.Tasks)
                 .Where(a => a.Day == date.Day && a.Month == date.Month && a.Year == date.Year).First();
-                int i = 1;
-                if (dateInDatabase.Tasks.Count > 0)
+            List<DockPanel> docks = new();
+            for (int i = 0; i < dateInDatabase.Tasks.Count(); i++)
+            {
+                DockPanel panel = new DockPanel();
+                panel.Height = 90;
+                panel.LastChildFill = false;
+
+                Image image = new Image();
+
+                Button button = new Button();
+                button.Click += new RoutedEventHandler(TaskButton_Click);
+                button.Height = 50;
+                button.Width = 50;
+                button.Margin = new Thickness(10);
+                button.Content = image;
+                button.Tag = i;
+
+                CheckBox checkBox = new CheckBox();
+                checkBox.IsChecked = dateInDatabase.Tasks[i].Status;
+                checkBox.HorizontalAlignment = HorizontalAlignment.Left;
+                checkBox.Margin = new Thickness(30, 0, 0, 5);
+                checkBox.Checked += new RoutedEventHandler(TaskCB_Checked);
+                checkBox.Unchecked += new RoutedEventHandler(TaskCB_UnChecked);
+                checkBox.Tag = i;
+
+                TextBlock title = new TextBlock();
+                title.Width = 200;
+                title.Height = 20;
+                title.TextAlignment = TextAlignment.Left;
+                title.Margin = new Thickness(5);
+                title.Text = dateInDatabase.Tasks[i].Name;
+
+
+                TextBlock description = new TextBlock();
+                description.Width = 200;
+                description.Height = 60;
+                description.TextAlignment = TextAlignment.Left;
+                description.Text = dateInDatabase.Tasks[i].Decription;
+
+                DockPanel.SetDock(checkBox, Dock.Bottom);
+                DockPanel.SetDock(button, Dock.Left);
+                DockPanel.SetDock(title, Dock.Top);
+                DockPanel.SetDock(description, Dock.Top);
+
+                panel.Children.Add(checkBox);
+                panel.Children.Add(button);
+                panel.Children.Add(title);
+                panel.Children.Add(description);
+
+                docks.Add(panel);
+            }
+            return docks;
+
+        }
+
+        public void DisplayTasks(List<DockPanel> panels)
+        {
+            foreach (Panel panel in panels)
+            {
+                if (panel != null)
                 {
-                    foreach (DataModels.Task task in dateInDatabase.Tasks)
-                    {
-                        DisplayTask(i, task);
-                        i++;
-                    }
+                    Tasks.Children.Add(panel);
                 }
             }
-
         }
-        private void DisplayTask(int slot, DataModels.Task task)
+
+        public void ClearTaskDisplay()
         {
-            if(slot == 1)
+            Tasks.Children.Clear();
+        }
+        void TaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (clickStatusDelete)
             {
-                p1.Height = 90;
-                cb1.IsChecked = task.Status;
-                tt1.Text = task.Name;
-                d1.Text = task.Decription;
+                DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
+                using Context myContext = new();
+                if (myContext.dates.Any(o => o.Day == selectedDate.Day)
+                    && myContext.dates.Any(o => o.Month == selectedDate.Month)
+                    && myContext.dates.Any(o => o.Year == selectedDate.Year))
+                {
+                    var dateInDatabase = myContext.dates.Include(m => m.Tasks)
+                    .Where(a => a.Day == selectedDate.Day && a.Month == selectedDate.Month && a.Year == selectedDate.Year).First();
+
+                    myContext.tasks.Remove(dateInDatabase.Tasks[(int)(sender as Button).Tag]);
+                    myContext.SaveChanges();
+                    ClearTaskDisplay();
+                    DisplayTasks(generateStacks(selectedDate));
+                }
             }
-            else if(slot == 2)
+            else if (clickStatusModify)
             {
-                p2.Height = 90;
-                cb2.IsChecked = task.Status;
-                tt2.Text = task.Name;
-                d2.Text = task.Decription;
-            }
-            else if (slot == 3)
-            {
-                p3.Height = 90;
-                cb3.IsChecked = task.Status;
-                tt3.Text = task.Name;
-                d3.Text = task.Decription;
-            }
-            else if (slot == 4)
-            {
-                p4.Height = 90;
-                cb4.IsChecked = task.Status;
-                tt4.Text = task.Name;
-                d4.Text = task.Decription;
-            }
-            else if (slot == 5)
-            {
-                p5.Height = 90;
-                cb5.IsChecked = task.Status;
-                tt5.Text = task.Name;
-                d5.Text = task.Decription;
-            }
-            else if (slot == 6)
-            {
-                p6.Height = 90;
-                cb6.IsChecked = task.Status;
-                tt6.Text = task.Name;
-                d6.Text = task.Decription;
-            }
-            else if (slot == 7)
-            {
-                p7.Height = 90;
-                cb7.IsChecked = task.Status;
-                tt7.Text = task.Name;
-                d7.Text = task.Decription;
-            }
-            else if (slot == 8)
-            {
-                p8.Height = 90;
-                cb8.IsChecked = task.Status;
-                tt8.Text = task.Name;
-                d8.Text = task.Decription;
-            }
-            else if (slot == 9)
-            {
-                p9.Height = 90;
-                cb9.IsChecked = task.Status;
-                tt9.Text = task.Name;
-                d9.Text = task.Decription;
-            }
-            else if (slot == 10)
-            {
-                p10.Height = 90;
-                cb10.IsChecked = task.Status;
-                tt10.Text = task.Name;
-                d10.Text = task.Decription;
+                DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
+                using Context myContext = new();
+                if (myContext.dates.Any(o => o.Day == selectedDate.Day)
+                    && myContext.dates.Any(o => o.Month == selectedDate.Month)
+                    && myContext.dates.Any(o => o.Year == selectedDate.Year))
+                {
+                    var dateInDatabase = myContext.dates.Include(m => m.Tasks)
+                    .Where(a => a.Day == selectedDate.Day && a.Month == selectedDate.Month && a.Year == selectedDate.Year).First();
+
+                    TaskSpec taskSpec = new TaskSpec();
+                    taskSpec.Day.Text = "Dzień: " + selectedDate.Day.ToString();
+                    taskSpec.Month.Text = "Miesiąc: " + selectedDate.Month.ToString();
+                    taskSpec.Year.Text = "Rok: " + selectedDate.Year.ToString();
+                    taskSpec.TaskName.Text = dateInDatabase.Tasks[(int)(sender as Button).Tag].Name;
+                    taskSpec.Description.Text = dateInDatabase.Tasks[(int)(sender as Button).Tag].Decription;
+                    if (taskSpec.ShowDialog() == true)
+                    {
+                        string tskName = taskSpec.ResultTaskName;
+                        string descr = taskSpec.ResultDescription;
+                        dateInDatabase.Tasks[(int)(sender as Button).Tag].Name = tskName;
+                        dateInDatabase.Tasks[(int)(sender as Button).Tag].Decription = descr;
+                    }
+                    myContext.SaveChanges();
+                    ClearTaskDisplay();
+                    DisplayTasks(generateStacks(selectedDate));
+                }
             }
         }
 
-        private void ClearTaskDisplay()
+        void TaskCB_Checked(object sender, RoutedEventArgs e)
         {
-
-                p1.Height = 0;
-                
-                p2.Height = 0;
-
-                p3.Height = 0;
-
-                p4.Height = 0;
-
-                p5.Height = 0;
-
-                p6.Height = 0;
-
-                p7.Height = 0;
-
-                p8.Height = 0;
-
-                p9.Height = 0;
-
-                p10.Height = 0;
-
+            DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
+            using Context myContext = new();
+            if (myContext.dates.Any(o => o.Day == selectedDate.Day)
+                && myContext.dates.Any(o => o.Month == selectedDate.Month)
+                && myContext.dates.Any(o => o.Year == selectedDate.Year))
+            {
+                var dateInDatabase = myContext.dates.Include(m => m.Tasks)
+                .Where(a => a.Day == selectedDate.Day && a.Month == selectedDate.Month && a.Year == selectedDate.Year).First();
+                dateInDatabase.Tasks[(int)(sender as CheckBox).Tag].Status = true;
+            }
+            myContext.SaveChanges();
+        }
+        void TaskCB_UnChecked(object sender, RoutedEventArgs e)
+        {
+            DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
+            using Context myContext = new();
+            if (myContext.dates.Any(o => o.Day == selectedDate.Day)
+                && myContext.dates.Any(o => o.Month == selectedDate.Month)
+                && myContext.dates.Any(o => o.Year == selectedDate.Year))
+            {
+                var dateInDatabase = myContext.dates.Include(m => m.Tasks)
+                .Where(a => a.Day == selectedDate.Day && a.Month == selectedDate.Month && a.Year == selectedDate.Year).First();
+                dateInDatabase.Tasks[(int)(sender as CheckBox).Tag].Status = false;
+            }
+            myContext.SaveChanges();
         }
     }
 }
+
