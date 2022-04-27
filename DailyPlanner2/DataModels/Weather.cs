@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace DailyPlanner2.DataModels
 {
-    public class Weather
+    class Weather
     {
-        string key = "251c59d489e49d827c6c29ff6bf71e4d";
+        public class weather
+        {
+            public string? icon { get; set; }
+            public string? main { get; set; }
+        }
+        public class main
+        {
+            public string? temp { get; set; }
+        }
+        public class root
+        {
+            public List<weather>? weathers { get; set; }
+            public main? main { get; set; }
+        }
     }
 }

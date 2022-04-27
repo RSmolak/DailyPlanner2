@@ -197,11 +197,12 @@
         </Style>
     </Window.Resources>
 
+    
 
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200px"/>
+            <ColumnDefinition Width="300px"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -210,12 +211,154 @@
             <RowDefinition Height="70px"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <Calendar Style="{DynamicResource CalendarStyle1}" x:Name="MyCalendar"/>
+        <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
+            <Calendar Style="{DynamicResource CalendarStyle1}" x:Name="MyCalendar"
+                      SelectedDatesChanged="Calendar_OnSelectedDatesChanged"
+                      Margin="0, 0, 0, 15"/>
         </Viewbox>
         <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Hidden">
-            <StackPanel x:Name="Tasks" >
-
+            <StackPanel x:Name="Tasks"  >
+                <DockPanel Height="90" LastChildFill="False" x:Name="p1">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb1"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt1">
+                        <Image Height="50" Width="50" x:Name="im1"></Image>
+                    </Button>
+                    <TextBlock Width="200px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt1">Task Title</TextBlock>
+                    <TextBlock Width="200px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d1">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p2">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb2"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt2">
+                        <Image Height="50" Width="50" x:Name="im2"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt2">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d2">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p3">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb3"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt3">
+                        <Image Height="50" Width="50" x:Name="im3"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt3">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d3">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p4">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb4"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt4">
+                        <Image Height="50" Width="50" x:Name="im4"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt4">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d4">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p5">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb5"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt5">
+                        <Image Height="50" Width="50" x:Name="im5"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt5">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d5">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p6">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb6"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt6">
+                        <Image Height="50" Width="50" x:Name="im6"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt6">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d6">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p7">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb7"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt7">
+                        <Image Height="50" Width="50" x:Name="im7"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt7">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d7">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p8">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb8"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt8">
+                        <Image Height="50" Width="50" x:Name="im8"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt8">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d8">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p9">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb9"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt9">
+                        <Image Height="50" Width="50" x:Name="im9"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt9">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d9">Task Title</TextBlock>
+                </DockPanel>
+                <DockPanel Height="0" LastChildFill="False" x:Name="p10">
+                    <CheckBox DockPanel.Dock="Bottom" HorizontalAlignment="Left"
+                              Margin="30,0,0,5" x:Name="cb10"
+                              ></CheckBox>
+                    <Button Height="50" Width="50" Margin="10px"
+                            DockPanel.Dock="Left" VerticalAlignment="Top" x:Name="bt10">
+                        <Image Height="50" Width="50" x:Name="im10"></Image>
+                    </Button>
+                    <TextBlock Width="120px" Height="20" TextAlignment="Center"
+                               DockPanel.Dock="Top" Margin="5"
+                               x:Name="tt10">Task Title</TextBlock>
+                    <TextBlock Width="120px" Height="60" TextAlignment="Left"
+                               DockPanel.Dock="Top" x:Name="d10">Task Title</TextBlock>
+                </DockPanel>
+                
             </StackPanel>
         </ScrollViewer>
         <Button x:Name="AddTask" Content="+" Grid.Column="0" Grid.Row="2" Height="60"
