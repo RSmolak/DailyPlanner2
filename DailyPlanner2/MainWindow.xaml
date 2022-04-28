@@ -221,6 +221,11 @@
                 
             </StackPanel>
         </ScrollViewer>
+        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+            <Image x:Name="weatherIMG"></Image>
+            
+            <TextBlock x:Name="WeatherTemperature"></TextBlock>
+        </StackPanel>
         <Button x:Name="AddTask" Content="+" Grid.Column="0" Grid.Row="2" Height="60"
                 Width="60" HorizontalAlignment="Left" Margin="5"
                 Click="AddTask_Click"/>

@@ -10,17 +10,17 @@ namespace DailyPlanner2.DataModels
     {
         public class weather
         {
-            public string? icon { get; set; }
-            public string? main { get; set; }
+            public string icon { get; set; }
+            public string main { get; set; }
         }
         public class main
         {
-            public string? temp { get; set; }
+            public double temp { get; set; }
         }
         public class root
         {
-            public List<weather>? weathers { get; set; }
-            public main? main { get; set; }
+            public List<weather> weather { get; set; }
+            public main main { get; set; }
         }
     }
 }

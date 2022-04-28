@@ -24,17 +24,29 @@ namespace DailyPlanner2
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string APIKey = "251c59d489e49d827c6c29ff6bf71e4d";
+        string APIKey = "b7e41ee9c532be983314cb0da047e58d";
         bool clickStatusDelete = false;
         bool clickStatusModify = false;
 
         void getWeather()
         {
-            using (WebClient web = new WebClient())
+            using (WebClient web = new())
             {
-                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?id=Wroclaw&appid={0}", APIKey);
-                var json = web.DownloadString(url);
+                string url = "https://api.openweathermap.org/data/2.5/weather?q=Wroclaw&appid=" + APIKey;
+                string json = web.DownloadString(url);
                 Weather.root Info = JsonConvert.DeserializeObject<Weather.root>(json);
+
+                WeatherTemperature.Text = (Info.main.temp - 273.15).ToString();
+                //weatherIMG.Source = "http://openweathermap.org/img/w/" + Info.weathers[0].icon + ".png";
+
+                var fullFilePath = @"http://openweathermap.org/img/w/" + Info.weather[0].icon + ".png";
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
+                bitmap.EndInit();
+
+                weatherIMG.Source = bitmap;
             }
         }
         public MainWindow()
@@ -44,6 +56,7 @@ namespace DailyPlanner2
             DateTime selectedDate = (DateTime)MyCalendar.SelectedDate;
             ClearTaskDisplay();
             DisplayTasks(generateStacks((DateTime)selectedDate));
+            getWeather();
         }
 
         private void AddTask_Click(object sender, RoutedEventArgs e)
