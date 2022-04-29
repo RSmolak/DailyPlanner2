@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DailyPlanner2"
         mc:Ignorable="d"
         Title="TaskSpec" Height="210" Width="300">
-    <Grid>
+    <Grid Background="#2D2A32">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
@@ -21,21 +21,29 @@
             <RowDefinition Height="30px"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center">Utwórz zadanie</TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="1">Nazwa zadania:</TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="2">Opis:</TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="4" x:Name="Day">Dzień:</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="4" x:Name="Month">Miesiąc:</TextBlock>
-        <TextBlock Grid.Column="2" Grid.Row="4" x:Name="Year">Rok:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center"
+                   FontWeight="Bold" Foreground="#A8C7B7">Utwórz zadanie</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="SemiBold"
+                   Foreground="#A8C7B7">Nazwa zadania:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="SemiBold"
+                   Foreground="#A8C7B7">Opis:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="4" x:Name="Day"
+                   FontWeight="SemiBold" Foreground="#A8C7B7">Dzień:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="4" x:Name="Month"
+                   FontWeight="SemiBold" Foreground="#A8C7B7">Miesiąc:</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="4" x:Name="Year"
+                   FontWeight="SemiBold" Foreground="#A8C7B7">Rok:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" MaxHeight="20px"
                  VerticalAlignment="Top" x:Name="TaskName" Margin="0,0,10,0"> </TextBox>
         <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"
                  x:Name="Description" Margin ="5,0,10,0"></TextBox>
         <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
                 Margin="5,3,5,3" x:Name="SaveButton"
-                Click="SaveButton_Click">Zapisz!</Button>
+                Click="SaveButton_Click" FontWeight="SemiBold"
+                Background="#A8C7B7">Zapisz!</Button>
         <Button Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1"
                 Margin="5,3,5,3" x:Name="CancelButton"
-                Click="CancelButton_Click">Anuluj :(</Button>
+                Click="CancelButton_Click" FontWeight="SemiBold"
+                Background="#A8C7B7">Anuluj :(</Button>
     </Grid>
 </Window>

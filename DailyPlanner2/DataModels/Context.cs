@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DailyPlanner2.DataModels
 {
+    /// <summary>
+    /// Klasa odpowiadająca za powiązanie obiektowo relacyjne bazy danych z programem
+    /// </summary>
     public class Context : DbContext
     {
         public DbSet<Task> tasks {get; set;}

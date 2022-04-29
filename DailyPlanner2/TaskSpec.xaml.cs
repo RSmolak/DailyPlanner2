@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace DailyPlanner2
 {
     /// <summary>
-    /// Interaction logic for TaskSpec.xaml
+    /// Klasa interakcji z oknem dodawania zadań
     /// </summary>
     public partial class TaskSpec : Window
     {
@@ -32,7 +32,9 @@ namespace DailyPlanner2
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Funkcja zamyka okno zapisujac zmiany
+        /// </summary>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -50,6 +52,10 @@ namespace DailyPlanner2
             Window.GetWindow(this).DialogResult = true;
             Window.GetWindow(this).Close();
         }
+
+        /// <summary>
+        /// Funkcja zamyka okno i nie zapisuje zmiany
+        /// </summary>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).DialogResult = false;

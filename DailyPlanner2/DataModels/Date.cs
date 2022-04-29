@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace DailyPlanner2.DataModels
 {
+    /// <summary>
+    /// Klasa reprezentująca dany dzień
+    /// Zawiera informacje takie jak: ID, dzien, miesiac, rok, listę zadań danego dnia
+    /// </summary>
     public class Date
     {
         public int Id { get; set; } 

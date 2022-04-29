@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DailyPlanner2.DataModels
 {
+    /// <summary>
+    /// Klasa, ktora pozwala zdekodowac plik Json pobrany z API OpenWeatherMap.com
+    /// Pobierane informacje to temperatura oraz ikona pokazujaca stan zachmurzenia i opadow atmosferycznych
+    /// </summary>
     class Weather
     {
         public class weather
