@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DailyPlanner2</name>
+    </assembly>
+    <members>
+        <member name="T:DailyPlanner2.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.Chart">
+            <summary>
+            Klasa odpowiadajaca za utworzenie wykresow ilustrujacych skutecznosc wykonywania zadan
+            Na wykresie przedstawione sa zadania wykonane oraz zadania zaplanowane
+            </summary>
+            <summary>
+            Chart
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.Chart.AmountOfTasksPlanned">
+            <summary>
+            Funkcja zwraca strukture siedmiu intow, gdzie kazdy mowi ile zadan zaplanowano danego dnia zaczynajac
+            od dzisiaj a konczac na dniu 6 dni temu
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.Chart.AmountOfTasksDone">
+            <summary>
+            Funkcja zwraca strukture siedmiu intow, gdzie kazdy mowi ile zadan udalo sie wykonac danego dnia zaczynajac
+            od dzisiaj a konczac na dniu 6 dni temu
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.Chart.dates">
+             <summary>
+             Funkcja generuje daty jako string aby wyświetlić je na wykresie
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.Chart.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.DataModels.Context">
+            <summary>
+            Klasa odpowiadająca za powiązanie obiektowo relacyjne bazy danych z programem
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.DataModels.Date">
+            <summary>
+            Klasa reprezentująca dany dzień
+            Zawiera informacje takie jak: ID, dzien, miesiac, rok, listę zadań danego dnia
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.DataModels.Task">
+            <summary>
+            Klasa reprezentujaca zadanie.
+            Przechowuje informacje takie jak: ID, nazwa, opis, status, ID daty, data
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.DataModels.Weather">
+            <summary>
+            Klasa, ktora pozwala zdekodowac plik Json pobrany z API OpenWeatherMap.com
+            Pobierane informacje to temperatura oraz ikona pokazujaca stan zachmurzenia i opadow atmosferycznych
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.getWeather">
+            <summary>
+            Funkcja odpowiedzialna za pobranie aktualnej pogody i wyswietlenie jej
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.AddTask_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Funkcja wywoływana po wciśnięciu przycisku "+". Wywołuje okno TaskSpec oraz dodaje zadanie do bazy
+            danych gdy zostanie ono utworzone w oknie TaskSpec.
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.DeleteTask_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Przełączenie na tryb usuwania zadań
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.ModifyTask_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Przełączenie na tryb modyfikacji zadań
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.Calendar_OnSelectedDatesChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            Funkcja wywoływana przy zmianie daty. Odświeża zadania na liście.
+            
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.generateStacks(System.DateTime)">
+            <summary>
+            Funkcja generująca StackPanel'e zawierające zadania do wykonania.
+            </summary>
+            <param name="date">Aktualnie wybrana data dla której wyświetlane są zadania</param>
+            <returns>Lista paneli z zadaniami</returns>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.DisplayTasks(System.Collections.Generic.List{System.Windows.Controls.DockPanel})">
+            <summary>
+            Funkcja odpowiadająca za wyświetlanie zadań
+            </summary>
+            <param name="panels">Lista paneli z zadaniami</param>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.ClearTaskDisplay">
+            <summary>
+            Funkcja usuwająca wyświetlanie aktualnych zadań
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.TaskButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Odpowiada za obsługę naciśnięcia przycisku przy zadaniu w zależności od wybranego trybu
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.ChartButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Funkcja otwierajaca okno z wykresem
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:DailyPlanner2.TaskSpec">
+            <summary>
+            Klasa interakcji z oknem dodawania zadań
+            </summary>
+            <summary>
+            TaskSpec
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.TaskSpec.SaveButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Funkcja zamyka okno zapisujac zmiany
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.TaskSpec.CancelButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Funkcja zamyka okno i nie zapisuje zmiany
+            </summary>
+        </member>
+        <member name="M:DailyPlanner2.TaskSpec.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>
